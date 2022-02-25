@@ -370,7 +370,7 @@ export default function AddLiquidity({
     if (txHash) {
       onFieldAInput('')
       // dont jump to pool page if creating
-      history.push('/pool')
+      history.push('/liquidity')
     }
     setTxHash('')
   }, [history, onFieldAInput, txHash])

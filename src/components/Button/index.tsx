@@ -20,7 +20,7 @@ export const BaseButton = styled(RebassButton)<
   width: ${({ width }) => width ?? '100%'};
   font-weight: 500;
   text-align: center;
-  border-radius: ${({ $borderRadius }) => $borderRadius ?? '20px'};
+  border-radius: 0;
   outline: none;
   border: 1px solid transparent;
   color: ${({ theme }) => theme.text1};
@@ -52,6 +52,7 @@ export const BaseButton = styled(RebassButton)<
 `
 
 export const ButtonPrimary = styled(BaseButton)`
+  font-size: 18px;
   background-color: ${({ theme }) => theme.primary1};
   color: white;
   &:focus {
@@ -80,7 +81,7 @@ export const ButtonPrimary = styled(BaseButton)`
 export const ButtonLight = styled(BaseButton)`
   background-color: ${({ theme }) => theme.primary5};
   color: ${({ theme }) => theme.primaryText1};
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && darken(0.03, theme.primary5)};
@@ -108,7 +109,7 @@ export const ButtonLight = styled(BaseButton)`
 export const ButtonGray = styled(BaseButton)`
   background-color: ${({ theme }) => theme.bg1};
   color: ${({ theme }) => theme.text2};
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
 
   &:hover {
@@ -123,7 +124,7 @@ export const ButtonSecondary = styled(BaseButton)`
   border: 1px solid ${({ theme }) => theme.primary4};
   color: ${({ theme }) => theme.primary1};
   background-color: transparent;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 12px;
   padding: ${({ padding }) => (padding ? padding : '10px')};
 

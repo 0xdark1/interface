@@ -74,7 +74,7 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
       <StyledNavLink id={`swap-nav-link`} to={'/swap'} isActive={() => active === 'swap'}>
         <Trans>Swap</Trans>
       </StyledNavLink>
-      <StyledNavLink id={`pool-nav-link`} to={'/pool'} isActive={() => active === 'pool'}>
+      <StyledNavLink id={`pool-nav-link`} to={'/liquidity'} isActive={() => active === 'pool'}>
         <Trans>Pool</Trans>
       </StyledNavLink>
     </Tabs>
@@ -117,8 +117,8 @@ export function AddRemoveTabs({
 
   // detect if back should redirect to v3 or v2 pool page
   const poolLink = location.pathname.includes('add/v2')
-    ? '/pool/v2'
-    : '/pool' + (!!positionID ? `/${positionID.toString()}` : '')
+    ? '/liquidity/v2'
+    : '/liquidity' + (!!positionID ? `/${positionID.toString()}` : '')
 
   return (
     <Tabs>
