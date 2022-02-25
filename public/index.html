@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
 
-    <title>Uniswap Interface</title>
-    <meta name="description" content="Swap or provide liquidity on the Uniswap Protocol" />
+    <title>Cronus Finance</title>
+    <meta name="description" content="Swap or provide liquidity on the Cronus Protocol" />
 
     <!--
       %PUBLIC_URL% will be replaced with the URL of the `public` folder during build.
@@ -16,7 +16,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#ff007a" />
-    <meta name="fortmatic-site-verification" content="j93LgcVZk79qcgyo" />
+    <meta name="fortmatic-site-verification" content="" />
 
     <!--
       manifest.json provides metadata used when the app is installed as a PWA.
@@ -26,32 +26,14 @@
 
     <link rel="preconnect" href="https://www.google-analytics.com/">
 
-    <link rel="preload" href="%PUBLIC_URL%/fonts/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
     <style>
         * {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             box-sizing: border-box;
-        }
-
-        /**
-          Explicitly load Inter var from public/ so it does not block LCP's critical path.
-        */
-        @font-face {
-            font-family: 'Inter custom';
-            font-weight: 100 900;
-            font-style: normal;
-            font-display: block;
-            font-named-instance: 'Regular';
-            src: url(%PUBLIC_URL%/fonts/Inter-roman.var.woff2) format("woff2 supports variations(gvar)"),
-                url(%PUBLIC_URL%/fonts/Inter-roman.var.woff2) format("woff2-variations"),
-                url(%PUBLIC_URL%/fonts/Inter-roman.var.woff2) format("woff2");
-        }
-
-        @supports (font-variation-settings: normal) {
-            * {
-                font-family: 'Inter custom', sans-serif;
-            }
         }
 
         html,
@@ -74,16 +56,17 @@
             font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
         }
 
-        #background-radial-gradient {
+        #background-geometric {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             pointer-events: none;
-            width: 200vw;
+            width: 1280px;
             height: 200vh;
-            background: radial-gradient(50% 50% at 50% 50%, #fc077d10 0%, rgba(255, 255, 255, 0) 100%);
-            transform: translate(-50vw, -100vh);
+            margin: 0 auto;
+            background-image: url('%PUBLIC_URL%/images/geometric.svg');
+            background-repeat: repeat-y;
             z-index: -1;
         }
 
@@ -98,7 +81,7 @@
         }
         @media (prefers-color-scheme: light) {
             html {
-                background-color: #F7F8FA;
+                background-color: #F4F4F4;
             }
         }
     </style>
@@ -112,7 +95,7 @@
       <div>&emsp;</div>
     </div>
 
-    <div id="background-radial-gradient"></div>
+    <div id="background-geometric"></div>
 
     <!--
       This HTML file is a template.

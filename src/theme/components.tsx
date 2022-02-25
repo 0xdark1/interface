@@ -94,12 +94,12 @@ const StyledLink = styled.a`
   font-weight: 500;
 
   :hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   :focus {
     outline: none;
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   :active {

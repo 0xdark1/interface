@@ -1,3 +1,4 @@
+import { ChevronDown16 } from '@carbon/icons-react'
 // eslint-disable-next-line no-restricted-imports
 import { t, Trans } from '@lingui/macro'
 import { PrivacyPolicyModal } from 'components/PrivacyPolicy'
@@ -7,19 +8,7 @@ import { useActiveLocale } from 'hooks/useActiveLocale'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useLocationLinkProps } from 'hooks/useLocationLinkProps'
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  BookOpen,
-  Check,
-  ChevronLeft,
-  Coffee,
-  FileText,
-  Globe,
-  HelpCircle,
-  Info,
-  MessageCircle,
-  Moon,
-  Sun,
-} from 'react-feather'
+import { Check, ChevronLeft, MessageCircle, Moon, Sun } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { useDarkModeManager } from 'state/user/hooks'
 import styled, { css } from 'styled-components/macro'
@@ -43,6 +32,8 @@ const StyledMenuIcon = styled(MenuIcon)`
 `
 
 const StyledMenuButton = styled.button`
+  display: flex;
+  align-items: center;
   width: 100%;
   height: 100%;
   border: none;
@@ -50,8 +41,7 @@ const StyledMenuButton = styled.button`
   margin: 0;
   padding: 0;
   height: 40px;
-  background-color: ${({ theme }) => theme.bg0};
-  border: 1px solid ${({ theme }) => theme.bg0};
+  color: ${({ theme }) => theme.text2};
   padding: 0.15rem 0.5rem;
   border-radius: 16px;
 
@@ -59,12 +49,23 @@ const StyledMenuButton = styled.button`
   :focus {
     cursor: pointer;
     outline: none;
-    border: 1px solid ${({ theme }) => theme.bg3};
+    color: ${({ theme }) => theme.text1};
   }
 
   svg {
     margin-top: 2px;
   }
+`
+
+const Text = styled.p`
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0 0.5rem 0 0.75rem;
+  font-size: 0.875rem;
+  width: fit-content;
+  font-weight: 500;
 `
 
 const UNIbutton = styled(ButtonPrimary)`
@@ -86,7 +87,7 @@ const MenuFlyout = styled.span<{ flyoutAlignment?: FlyoutAlignment }>`
   min-width: 196px;
   max-height: 350px;
   overflow: auto;
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: ${({ theme }) => theme.bg0};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border: 1px solid ${({ theme }) => theme.bg0};
@@ -96,7 +97,7 @@ const MenuFlyout = styled.span<{ flyoutAlignment?: FlyoutAlignment }>`
   flex-direction: column;
   font-size: 16px;
   position: absolute;
-  top: 3rem;
+  top: 4.5rem;
   z-index: 100;
 
   ${({ flyoutAlignment = FlyoutAlignment.RIGHT }) =>
@@ -230,7 +231,8 @@ export default function Menu() {
       {/* // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451 */}
       <StyledMenu ref={node as any}>
         <StyledMenuButton onClick={toggleMenu} aria-label={t`Menu`}>
-          <StyledMenuIcon />
+          <Text>More</Text>
+          <ChevronDown16 />
         </StyledMenuButton>
 
         {open &&
@@ -242,63 +244,19 @@ export default function Menu() {
               default:
                 return (
                   <MenuFlyout>
-                    <MenuItem href="https://uniswap.org/">
-                      <div>
-                        <Trans>About</Trans>
-                      </div>
-                      <Info opacity={0.6} size={16} />
-                    </MenuItem>
-                    <MenuItem href="https://help.uniswap.org/">
-                      <div>
-                        <Trans>Help Center</Trans>
-                      </div>
-                      <HelpCircle opacity={0.6} size={16} />
-                    </MenuItem>
-                    <MenuItem href="https://uniswap.canny.io/feature-requests">
-                      <div>
-                        <Trans>Request Features</Trans>
-                      </div>
-                      <Coffee opacity={0.6} size={16} />
-                    </MenuItem>
-                    <MenuItem href="https://discord.gg/FCfyBSbCU5">
+                    <MenuItem href="https://discord.gg/">
+                      {
+                        // TODO: put discord
+                      }
                       <div>
                         <Trans>Discord</Trans>
                       </div>
                       <MessageCircle opacity={0.6} size={16} />
                     </MenuItem>
-                    <ToggleMenuItem onClick={() => setMenu('lang')}>
-                      <div>
-                        <Trans>Language</Trans>
-                      </div>
-                      <Globe opacity={0.6} size={16} />
-                    </ToggleMenuItem>
                     <ToggleMenuItem onClick={() => toggleDarkMode()}>
                       <div>{darkMode ? <Trans>Light Theme</Trans> : <Trans>Dark Theme</Trans>}</div>
                       {darkMode ? <Moon opacity={0.6} size={16} /> : <Sun opacity={0.6} size={16} />}
                     </ToggleMenuItem>
-                    <MenuItem href="https://docs.uniswap.org/">
-                      <div>
-                        <Trans>Docs</Trans>
-                      </div>
-                      <BookOpen opacity={0.6} size={16} />
-                    </MenuItem>
-                    <ToggleMenuItem onClick={() => togglePrivacyPolicy()}>
-                      <div>
-                        <Trans>Legal & Privacy</Trans>
-                      </div>
-                      <FileText opacity={0.6} size={16} />
-                    </ToggleMenuItem>
-                    {showUNIClaimOption && (
-                      <UNIbutton
-                        onClick={openClaimModal}
-                        padding="8px 16px"
-                        width="100%"
-                        $borderRadius="12px"
-                        mt="0.5rem"
-                      >
-                        <Trans>Claim UNI</Trans>
-                      </UNIbutton>
-                    )}
                   </MenuFlyout>
                 )
             }
@@ -320,7 +278,7 @@ interface NewMenuProps {
 }
 
 const NewMenuFlyout = styled(MenuFlyout)`
-  top: 3rem !important;
+  top: 4.5rem !important;
 `
 const NewMenuItem = styled(InternalMenuItem)`
   width: max-content;

@@ -17,7 +17,7 @@ export default function SwapHeader({ allowedSlippage }: { allowedSlippage: Perce
     <StyledSwapHeader>
       <RowBetween>
         <RowFixed>
-          <ThemedText.Black fontWeight={500} fontSize={16} style={{ marginRight: '8px' }}>
+          <ThemedText.Black fontWeight={500} fontSize={20} style={{ marginRight: '8px' }}>
             <Trans>Swap</Trans>
           </ThemedText.Black>
         </RowFixed>

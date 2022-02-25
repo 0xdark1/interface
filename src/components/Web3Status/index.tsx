@@ -1,3 +1,4 @@
+import { ConnectionSignalOff20, Wallet20 } from '@carbon/icons-react'
 // eslint-disable-next-line no-restricted-imports
 import { t, Trans } from '@lingui/macro'
 import { Connector } from '@web3-react/types'
@@ -47,39 +48,39 @@ const Web3StatusGeneric = styled(ButtonSecondary)`
   }
 `
 const Web3StatusError = styled(Web3StatusGeneric)`
-  background-color: ${({ theme }) => theme.red1};
-  border: 1px solid ${({ theme }) => theme.red1};
-  color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.error};
   font-weight: 500;
+  border: none;
   :hover,
-  :focus {
-    background-color: ${({ theme }) => darken(0.1, theme.red1)};
+  :focus,
+  :active {
+    border: none;
+    box-shadow: none;
   }
 `
 
 const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
-  background-color: ${({ theme }) => theme.primary4};
   border: none;
 
   color: ${({ theme }) => theme.primaryText1};
   font-weight: 500;
 
   :hover,
-  :focus {
-    border: 1px solid ${({ theme }) => darken(0.05, theme.primary4)};
+  :focus,
+  :active {
+    border: none;
+    box-shadow: none;
     color: ${({ theme }) => theme.primaryText1};
   }
 
   ${({ faded }) =>
     faded &&
     css`
-      background-color: ${({ theme }) => theme.primary5};
-      border: 1px solid ${({ theme }) => theme.primary5};
       color: ${({ theme }) => theme.primaryText1};
 
       :hover,
       :focus {
-        border: 1px solid ${({ theme }) => darken(0.05, theme.primary4)};
+        border: none;
         color: ${({ theme }) => darken(0.05, theme.primaryText1)};
       }
     `}
@@ -105,7 +106,7 @@ const Text = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin: 0 0.5rem 0 0.25rem;
+  margin: 0 0.5rem 0 0.75rem;
   font-size: 1rem;
   width: fit-content;
   font-weight: 500;
@@ -179,13 +180,14 @@ function Web3StatusInner() {
   } else if (error) {
     return (
       <Web3StatusError onClick={toggleWalletModal}>
-        <NetworkIcon />
+        <ConnectionSignalOff20 />
         <Text>{error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}</Text>
       </Web3StatusError>
     )
   } else {
     return (
       <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
+        <Wallet20 />
         <Text>
           <Trans>Connect Wallet</Trans>
         </Text>

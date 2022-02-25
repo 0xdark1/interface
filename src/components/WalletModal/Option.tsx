@@ -22,7 +22,7 @@ const OptionCard = styled(InfoCard as any)`
   align-items: center;
   justify-content: space-between;
   margin-top: 2rem;
-  padding: 1rem;
+  padding: 1.5rem;
 `
 
 const OptionCardLeft = styled.div`
@@ -33,9 +33,22 @@ const OptionCardLeft = styled.div`
 
 const OptionCardClickable = styled(OptionCard as any)<{ clickable?: boolean }>`
   margin-top: 0;
+  border-radius: 0;
+  border: 0 solid transparent;
+  background-color: transparent;
+  &:not(:last-child),
+  &:first-child {
+    border-bottom: 1px solid;
+    border-color: ${({ theme }) => theme.bg1};
+  }
   &:hover {
     cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
-    border: ${({ clickable, theme }) => (clickable ? `1px solid ${theme.primary1}` : ``)};
+  }
+  &:focus,
+  &:hover,
+  &:active {
+    box-shadow: none;
+    background-color: ${({ theme }) => theme.bg1};
   }
   opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
 `

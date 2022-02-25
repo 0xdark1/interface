@@ -18,7 +18,6 @@ import { HideSmall, ThemedText } from 'theme'
 import { AdvancedSwapDetails } from './AdvancedSwapDetails'
 import GasEstimateBadge from './GasEstimateBadge'
 import { ResponsiveTooltipContainer } from './styleds'
-import SwapRoute from './SwapRoute'
 import TradePrice from './TradePrice'
 
 const Wrapper = styled(Row)`
@@ -35,12 +34,12 @@ const StyledInfoIcon = styled(Info)`
 
 const StyledCard = styled(OutlineCard)`
   padding: 12px;
-  border: 1px solid ${({ theme }) => theme.bg2};
+  border: 0 solid transparent;
 `
 
 const StyledHeaderRow = styled(RowBetween)<{ disabled: boolean; open: boolean }>`
   padding: 4px 8px;
-  border-radius: 12px;
+  border-radius: 0;
   background-color: ${({ open, theme }) => (open ? theme.bg1 : 'transparent')};
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
@@ -194,7 +193,6 @@ export default function SwapDetailsDropdown({
                 <AdvancedSwapDetails trade={trade} allowedSlippage={allowedSlippage} syncing={syncing} />
               </StyledCard>
             ) : null}
-            {trade ? <SwapRoute trade={trade} syncing={syncing} /> : null}
           </AutoColumn>
         </AnimatedDropdown>
       </AutoColumn>

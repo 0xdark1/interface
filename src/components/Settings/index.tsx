@@ -1,3 +1,4 @@
+import { Settings24 } from '@carbon/icons-react'
 // eslint-disable-next-line no-restricted-imports
 import { t, Trans } from '@lingui/macro'
 import { Percent } from '@uniswap/sdk-core'
@@ -180,7 +181,7 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
         </ModalContentWrapper>
       </Modal>
       <StyledMenuButton onClick={toggle} id="open-settings-dialog-button" aria-label={t`Transaction Settings`}>
-        <StyledMenuIcon />
+        <Settings24 />
         {expertMode ? (
           <EmojiWrapper>
             <span role="img" aria-label="wizard-icon">
