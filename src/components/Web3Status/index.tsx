@@ -35,32 +35,34 @@ const IconWrapper = styled.div<{ size?: number }>`
 const Web3StatusGeneric = styled(ButtonSecondary)`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
+  height: 4.5rem;
+  border: 0 solid transparent;
+  border-radius: 0;
   align-items: center;
   padding: 0.5rem;
-  border-radius: 14px;
   cursor: pointer;
   user-select: none;
-  height: 36px;
-  margin-right: 2px;
-  margin-left: 1px;
   :focus {
     outline: none;
   }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    height: 3rem;
+  `};
 `
 const Web3StatusError = styled(Web3StatusGeneric)`
   color: ${({ theme }) => theme.error};
   font-weight: 500;
-  border: none;
+  border: 0 solid transparent;
   :hover,
   :focus,
   :active {
-    border: none;
+    border: 0 solid transparent;
     box-shadow: none;
   }
 `
 
 const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
-  border: none;
+  border: 0 solid transparent;
 
   color: ${({ theme }) => theme.primaryText1};
   font-weight: 500;
@@ -68,8 +70,9 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
   :hover,
   :focus,
   :active {
-    border: none;
+    border: 0 solid transparent;
     box-shadow: none;
+    outline: none;
     color: ${({ theme }) => theme.primaryText1};
   }
 
@@ -80,24 +83,21 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 
       :hover,
       :focus {
-        border: none;
+        border: 0 solid transparent;
+        box-shadow: none;
         color: ${({ theme }) => darken(0.05, theme.primaryText1)};
       }
     `}
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
-  border: 1px solid ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
   font-weight: 500;
   :hover,
   :focus {
-    border: 1px solid ${({ theme }) => darken(0.05, theme.bg3)};
-
-    :focus {
-      border: 1px solid ${({ pending, theme }) => (pending ? darken(0.1, theme.primary1) : darken(0.1, theme.bg2))};
-    }
+    border: 0 solid transparent;
+    box-shadow: none;
+    background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
   }
 `
 

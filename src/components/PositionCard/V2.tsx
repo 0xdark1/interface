@@ -188,7 +188,7 @@ export default function V2PositionCard({ pair, border, stakedBalance }: Position
                   padding="8px"
                   $borderRadius="8px"
                   as={Link}
-                  to={`/migrate/v2/${pair.liquidityToken.address}`}
+                  to={`/migrate/${pair.liquidityToken.address}`}
                   width="64%"
                 >
                   <Trans>Migrate</Trans>
@@ -198,7 +198,7 @@ export default function V2PositionCard({ pair, border, stakedBalance }: Position
                   $borderRadius="8px"
                   as={Link}
                   width="32%"
-                  to={`/remove/v2/${currencyId(currency0)}/${currencyId(currency1)}`}
+                  to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}`}
                 >
                   <Trans>Remove</Trans>
                 </ButtonSecondary>

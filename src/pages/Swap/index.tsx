@@ -1,3 +1,4 @@
+import { ArrowsVertical20 } from '@carbon/icons-react'
 import { Trans } from '@lingui/macro'
 import { Trade } from '@uniswap/router-sdk'
 import { Currency, CurrencyAmount, Token, TradeType } from '@uniswap/sdk-core'
@@ -386,7 +387,7 @@ export default function Swap({ history }: RouteComponentProps) {
       />
       <AppBody>
         <SwapHeader allowedSlippage={allowedSlippage} />
-        <Wrapper id="swap-page">
+        <Wrapper id="swap-page" style={{ padding: '1.25rem' }}>
           <ConfirmSwapModal
             isOpen={showConfirm}
             trade={trade}
@@ -420,8 +421,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 loading={independentField === Field.OUTPUT && routeIsSyncing}
               />
               <ArrowWrapper clickable>
-                <ArrowDown
-                  size="16"
+                <ArrowsVertical20
                   onClick={() => {
                     setApprovalSubmitted(false) // reset 2 step UI for approvals
                     onSwitchTokens()
@@ -461,7 +461,7 @@ export default function Swap({ history }: RouteComponentProps) {
             ) : null}
           </AutoColumn>
         </Wrapper>
-        {!showWrap && userHasSpecifiedInputOutput && (trade || routeIsLoading || routeIsSyncing) && (
+        {!showWrap && userHasSpecifiedInputOutput && (
           <SwapDetailsDropdown
             trade={trade}
             syncing={routeIsSyncing}

@@ -12,7 +12,7 @@ import styled, { ThemeContext } from 'styled-components/macro'
 import { ButtonOutlined, ButtonPrimary, ButtonSecondary } from '../../components/Button'
 import Card from '../../components/Card'
 import { AutoColumn } from '../../components/Column'
-import { CardBGImage, CardNoise, CardSection, DataCard } from '../../components/earn/styled'
+import { DataCard } from '../../components/earn/styled'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 import FullPositionCard from '../../components/PositionCard'
 import { RowBetween, RowFixed } from '../../components/Row'
@@ -138,39 +138,6 @@ export default function Pool() {
     <>
       <PageWrapper>
         <SwapPoolTabs active={'pool'} />
-        <VoteCard>
-          <CardBGImage />
-          <CardNoise />
-          <CardSection>
-            <AutoColumn gap="md">
-              <RowBetween>
-                <ThemedText.White fontWeight={600}>
-                  <Trans>Liquidity provider rewards</Trans>
-                </ThemedText.White>
-              </RowBetween>
-              <RowBetween>
-                <ThemedText.White fontSize={14}>
-                  <Trans>
-                    Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are
-                    added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.
-                  </Trans>
-                </ThemedText.White>
-              </RowBetween>
-              <ExternalLink
-                style={{ color: 'white', textDecoration: 'underline' }}
-                target="_blank"
-                href="https://uniswap.org/docs/v2/core-concepts/pools/"
-              >
-                <ThemedText.White fontSize={14}>
-                  <Trans>Read more about providing liquidity</Trans>
-                </ThemedText.White>
-              </ExternalLink>
-            </AutoColumn>
-          </CardSection>
-          <CardBGImage />
-          <CardNoise />
-        </VoteCard>
-
         {ON_L2 ? (
           <AutoColumn gap="lg" justify="center">
             <AutoColumn gap="md" style={{ width: '100%' }}>
@@ -187,21 +154,18 @@ export default function Pool() {
               <TitleRow style={{ marginTop: '1rem' }} padding={'0'}>
                 <HideSmall>
                   <ThemedText.MediumHeader style={{ marginTop: '0.5rem', justifySelf: 'flex-start' }}>
-                    <Trans>Your V2 liquidity</Trans>
+                    <Trans>Your pools</Trans>
                   </ThemedText.MediumHeader>
                 </HideSmall>
                 <ButtonRow>
-                  <ResponsiveButtonSecondary as={Link} padding="6px 8px" to="/add/v2/ETH">
-                    <Trans>Create a pair</Trans>
-                  </ResponsiveButtonSecondary>
-                  <ResponsiveButtonPrimary id="find-pool-button" as={Link} to="/liquidity/v2/find" padding="6px 8px">
+                  <ResponsiveButtonPrimary id="find-pool-button" as={Link} to="/liquidity/find" padding="6px 8px">
                     <Text fontWeight={500} fontSize={16}>
                       <Trans>Import Pool</Trans>
                     </Text>
                   </ResponsiveButtonPrimary>
-                  <ResponsiveButtonPrimary id="join-pool-button" as={Link} to="/add/v2/ETH" padding="6px 8px">
+                  <ResponsiveButtonPrimary id="join-pool-button" as={Link} to="/add/ETH" padding="6px 8px">
                     <Text fontWeight={500} fontSize={16}>
-                      <Trans>Add V2 Liquidity</Trans>
+                      <Trans>Add liquidity</Trans>
                     </Text>
                   </ResponsiveButtonPrimary>
                 </ButtonRow>

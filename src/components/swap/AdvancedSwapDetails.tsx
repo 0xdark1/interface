@@ -13,6 +13,7 @@ import { computeRealizedLPFeePercent } from '../../utils/prices'
 import { AutoColumn } from '../Column'
 import { RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
+import TradePrice from './TradePrice'
 
 const StyledCard = styled(Card)`
   padding: 0;
@@ -23,6 +24,8 @@ interface AdvancedSwapDetailsProps {
   allowedSlippage: Percent
   syncing?: boolean
   hideRouteDiagram?: boolean
+  showInverted: boolean
+  setShowInverted: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function TextWithLoadingPlaceholder({
@@ -43,7 +46,13 @@ function TextWithLoadingPlaceholder({
   )
 }
 
-export function AdvancedSwapDetails({ trade, allowedSlippage, syncing = false }: AdvancedSwapDetailsProps) {
+export function AdvancedSwapDetails({
+  trade,
+  allowedSlippage,
+  syncing = false,
+  showInverted,
+  setShowInverted,
+}: AdvancedSwapDetailsProps) {
   const theme = useContext(ThemeContext)
   const { chainId } = useActiveWeb3React()
 
@@ -55,9 +64,23 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, syncing = false }:
     return { expectedOutputAmount, priceImpact }
   }, [trade])
 
-  return !trade ? null : (
+  return (
     <StyledCard>
       <AutoColumn gap="8px">
+        <RowBetween>
+          <RowFixed>
+            <ThemedText.SubHeader color={theme.text1}>
+              <Trans>Exchange Rate</Trans>
+            </ThemedText.SubHeader>
+          </RowFixed>
+          {trade ? (
+            <TextWithLoadingPlaceholder syncing={syncing} width={65}>
+              <TradePrice price={trade.executionPrice} showInverted={showInverted} setShowInverted={setShowInverted} />
+            </TextWithLoadingPlaceholder>
+          ) : (
+            <ThemedText.Black fontSize={14}>-</ThemedText.Black>
+          )}
+        </RowBetween>
         <RowBetween>
           <RowFixed>
             <ThemedText.SubHeader color={theme.text1}>
@@ -88,7 +111,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, syncing = false }:
         <RowBetween>
           <RowFixed style={{ marginRight: '20px' }}>
             <ThemedText.SubHeader color={theme.text3}>
-              {trade.tradeType === TradeType.EXACT_INPUT ? (
+              {trade?.tradeType === TradeType.EXACT_INPUT ? (
                 <Trans>Minimum received</Trans>
               ) : (
                 <Trans>Maximum sent</Trans>
@@ -97,11 +120,17 @@ export function AdvancedSwapDetails({ trade, allowedSlippage, syncing = false }:
             </ThemedText.SubHeader>
           </RowFixed>
           <TextWithLoadingPlaceholder syncing={syncing} width={70}>
-            <ThemedText.Black textAlign="right" fontSize={14} color={theme.text3}>
-              {trade.tradeType === TradeType.EXACT_INPUT
-                ? `${trade.minimumAmountOut(allowedSlippage).toSignificant(6)} ${trade.outputAmount.currency.symbol}`
-                : `${trade.maximumAmountIn(allowedSlippage).toSignificant(6)} ${trade.inputAmount.currency.symbol}`}
-            </ThemedText.Black>
+            {trade ? (
+              <ThemedText.Black textAlign="right" fontSize={14} color={theme.text3}>
+                {trade.tradeType === TradeType.EXACT_INPUT
+                  ? `${trade.minimumAmountOut(allowedSlippage).toSignificant(6)} ${trade.outputAmount.currency.symbol}`
+                  : `${trade.maximumAmountIn(allowedSlippage).toSignificant(6)} ${trade.inputAmount.currency.symbol}`}
+              </ThemedText.Black>
+            ) : (
+              <ThemedText.Black textAlign="right" fontSize={14} color={theme.text3}>
+                -
+              </ThemedText.Black>
+            )}
           </TextWithLoadingPlaceholder>
         </RowBetween>
         {!trade?.gasUseEstimateUSD || !chainId || !SUPPORTED_GAS_ESTIMATE_CHAIN_IDS.includes(chainId) ? null : (

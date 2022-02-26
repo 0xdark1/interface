@@ -173,10 +173,10 @@ export function SummaryDialog({ trade, allowedSlippage, onConfirm }: SummaryDial
               </Trans>
             )}
           </Estimate>
+        </ExpandoColumn>
           <ActionButton onClick={onConfirm} action={action}>
             <Trans>Confirm swap</Trans>
           </ActionButton>
-        </ExpandoColumn>
       </Body>
     </>
   )

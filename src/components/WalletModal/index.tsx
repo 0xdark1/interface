@@ -62,9 +62,9 @@ const HeaderRow = styled.div`
 
 const ContentWrapper = styled.div`
   background-color: ${({ theme }) => theme.bg0};
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 0 1rem 0;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0 1rem 1rem 1rem`};
+  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0 0 1rem 0`};
 `
 
 const UpperSection = styled.div`

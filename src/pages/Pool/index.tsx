@@ -175,7 +175,7 @@ export default function Pool() {
           <Layers size={16} />
         </MenuItem>
       ),
-      link: '/liquidity/v2',
+      link: '/liquidity',
       external: false,
     },
     {
