@@ -26,6 +26,22 @@ export enum ExplorerDataType {
  * @param type the type of the data
  */
 export function getExplorerLink(chainId: number, data: string, type: ExplorerDataType): string {
+  /*
+  if (chainId === SupportedChainId.EVMOS_TESTNET) {
+    switch (type) {
+      case ExplorerDataType.TRANSACTION:
+        return `https://testnet.mintscan.io/evmos/txs/${data}`
+      case ExplorerDataType.ADDRESS:
+        return `https://testnet.mintscan.io/`
+      case ExplorerDataType.TOKEN:
+        return `https://testnet.mintscan.io/`
+      case ExplorerDataType.BLOCK:
+        return `https://testnet.mintscan.io/evmos/blocks/${data}`
+      default:
+        return `https://testnet.mintscan.io/`
+    }
+  }
+ */
   if (chainId === SupportedChainId.ARBITRUM_ONE) {
     switch (type) {
       case ExplorerDataType.TRANSACTION:

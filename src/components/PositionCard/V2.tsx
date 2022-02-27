@@ -21,7 +21,6 @@ import { LightCard } from '../Card'
 import { AutoColumn } from '../Column'
 import CurrencyLogo from '../CurrencyLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
-import { CardNoise } from '../earn/styled'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
 import { FixedHeightRow } from '.'
@@ -77,8 +76,7 @@ export default function V2PositionCard({ pair, border, stakedBalance }: Position
   const backgroundColor = useColor(pair?.token0)
 
   return (
-    <StyledPositionCard border={border} bgColor={backgroundColor}>
-      <CardNoise />
+    <StyledPositionCard border={border} bgColor={''}>
       <AutoColumn gap="12px">
         <FixedHeightRow>
           <AutoRow gap="8px">
@@ -188,7 +186,7 @@ export default function V2PositionCard({ pair, border, stakedBalance }: Position
                   padding="8px"
                   $borderRadius="8px"
                   as={Link}
-                  to={`/migrate/v2/${pair.liquidityToken.address}`}
+                  to={`/migrate/${pair.liquidityToken.address}`}
                   width="64%"
                 >
                   <Trans>Migrate</Trans>
@@ -198,7 +196,7 @@ export default function V2PositionCard({ pair, border, stakedBalance }: Position
                   $borderRadius="8px"
                   as={Link}
                   width="32%"
-                  to={`/remove/v2/${currencyId(currency0)}/${currencyId(currency1)}`}
+                  to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}`}
                 >
                   <Trans>Remove</Trans>
                 </ButtonSecondary>

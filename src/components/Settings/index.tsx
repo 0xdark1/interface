@@ -3,14 +3,11 @@ import { Settings24 } from '@carbon/icons-react'
 import { t, Trans } from '@lingui/macro'
 import { Percent } from '@uniswap/sdk-core'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { AUTO_ROUTER_SUPPORTED_CHAINS } from 'lib/hooks/routing/clientSideSmartOrderRouter'
 import { useContext, useRef, useState } from 'react'
 import { Settings, X } from 'react-feather'
-import ReactGA from 'react-ga'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components/macro'
 
-import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'
 import { ApplicationModal } from '../../state/application/reducer'
 import { useClientSideRouter, useExpertModeManager } from '../../state/user/hooks'
@@ -58,7 +55,7 @@ const StyledMenuButton = styled.button`
   padding: 0;
   border-radius: 0.5rem;
   height: 20px;
-
+  color: ${({ theme }) => theme.text1};
   :hover,
   :focus {
     cursor: pointer;
@@ -111,12 +108,10 @@ const Break = styled.div`
 `
 
 const ModalContentWrapper = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
-  background-color: ${({ theme }) => theme.bg2};
-  border-radius: 20px;
 `
 
 export default function SettingsTab({ placeholderSlippage }: { placeholderSlippage: Percent }) {
@@ -134,8 +129,6 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
 
   // show confirmation view before turning on
   const [showConfirmation, setShowConfirmation] = useState(false)
-
-  useOnClickOutside(node, open ? toggle : undefined)
 
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
@@ -190,37 +183,16 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
           </EmojiWrapper>
         ) : null}
       </StyledMenuButton>
-      {open && (
-        <MenuFlyout>
-          <AutoColumn gap="md" style={{ padding: '1rem' }}>
-            <Text fontWeight={600} fontSize={14}>
-              <Trans>Transaction Settings</Trans>
-            </Text>
+      <Modal isOpen={open} onDismiss={toggle}>
+        <ModalContentWrapper style={{ zIndex: 100 }} onClick={(e) => e.preventDefault()}>
+          <AutoColumn gap="md" style={{ padding: '1rem', width: '100%' }}>
+            <RowBetween>
+              <Text fontWeight={600} fontSize={14}>
+                <Trans>Transaction Settings</Trans>
+              </Text>
+              <StyledCloseIcon onClick={toggle} />
+            </RowBetween>
             <TransactionSettings placeholderSlippage={placeholderSlippage} />
-            <Text fontWeight={600} fontSize={14}>
-              <Trans>Interface Settings</Trans>
-            </Text>
-            {chainId && AUTO_ROUTER_SUPPORTED_CHAINS.includes(chainId) && (
-              <RowBetween>
-                <RowFixed>
-                  <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
-                    <Trans>Auto Router API</Trans>
-                  </ThemedText.Black>
-                  <QuestionHelper text={<Trans>Use the Uniswap Labs API to get faster quotes.</Trans>} />
-                </RowFixed>
-                <Toggle
-                  id="toggle-optimized-router-button"
-                  isActive={!clientSideRouter}
-                  toggle={() => {
-                    ReactGA.event({
-                      category: 'Routing',
-                      action: clientSideRouter ? 'enable routing API' : 'disable routing API',
-                    })
-                    setClientSideRouter(!clientSideRouter)
-                  }}
-                />
-              </RowBetween>
-            )}
             <RowBetween>
               <RowFixed>
                 <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
@@ -249,8 +221,66 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
               />
             </RowBetween>
           </AutoColumn>
-        </MenuFlyout>
-      )}
+        </ModalContentWrapper>
+      </Modal>
     </StyledMenu>
   )
 }
+
+/*
+
+return (
+              <Text fontWeight={600} fontSize={14}>
+              <Trans>Interface Settings</Trans>
+            </Text>
+            {chainId && AUTO_ROUTER_SUPPORTED_CHAINS.includes(chainId) && (
+              <RowBetween>
+                <RowFixed>
+                  <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
+                    <Trans>Auto Router API</Trans>
+                  </ThemedText.Black>
+                  <QuestionHelper text={<Trans>Use the Uniswap Labs API to get faster quotes.</Trans>} />
+                </RowFixed>
+                <Toggle
+                  id="toggle-optimized-router-button"
+                  isActive={!clientSideRouter}
+                  toggle={() => {
+                    ReactGA.event({
+                      category: 'Routing',
+                      action: clientSideRouter ? 'enable routing API' : 'disable routing API',
+                    })
+                    setClientSideRouter(!clientSideRouter)
+                  }}
+                />
+              </RowBetween>
+            )}
+{            <RowBetween>
+              <RowFixed>
+                <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
+                  <Trans>Expert Mode</Trans>
+                </ThemedText.Black>
+                <QuestionHelper
+                  text={
+                    <Trans>Allow high price impact trades and skip the confirm screen. Use at your own risk.</Trans>
+                  }
+                />
+              </RowFixed>
+              <Toggle
+                id="toggle-expert-mode-button"
+                isActive={expertMode}
+                toggle={
+                  expertMode
+                    ? () => {
+                        toggleExpertMode()
+                        setShowConfirmation(false)
+                      }
+                    : () => {
+                        toggle()
+                        setShowConfirmation(true)
+                      }
+                }
+              />
+            </RowBetween>}
+)
+
+*/

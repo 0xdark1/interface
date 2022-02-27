@@ -8,6 +8,8 @@ import { LinkStyledButton } from '../../theme'
 
 const CopyIcon = styled(LinkStyledButton)`
   color: ${({ theme }) => theme.text3};
+  padding-left: 0;
+  padding-right: 0;
   flex-shrink: 0;
   display: flex;
   text-decoration: none;

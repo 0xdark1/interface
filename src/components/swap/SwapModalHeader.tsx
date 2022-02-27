@@ -16,13 +16,11 @@ import { AutoColumn } from '../Column'
 import { FiatValue } from '../CurrencyInputPanel/FiatValue'
 import CurrencyLogo from '../CurrencyLogo'
 import { RowBetween, RowFixed } from '../Row'
-import TradePrice from '../swap/TradePrice'
 import { AdvancedSwapDetails } from './AdvancedSwapDetails'
 import { SwapShowAcceptChanges, TruncatedText } from './styleds'
 
 const ArrowWrapper = styled.div`
   padding: 4px;
-  border-radius: 12px;
   height: 32px;
   width: 32px;
   position: relative;
@@ -32,9 +30,6 @@ const ArrowWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.bg1};
-  border: 4px solid;
-  border-color: ${({ theme }) => theme.bg0};
   z-index: 2;
 `
 
@@ -59,7 +54,7 @@ export default function SwapModalHeader({
   const fiatValueOutput = useUSDCValue(trade.outputAmount)
 
   return (
-    <AutoColumn gap={'4px'} style={{ marginTop: '1rem' }}>
+    <AutoColumn gap={'4px'} style={{ margin: '1rem' }}>
       <LightCard padding="0.75rem 1rem">
         <AutoColumn gap={'8px'}>
           <RowBetween align="center">
@@ -112,11 +107,13 @@ export default function SwapModalHeader({
           </RowBetween>
         </AutoColumn>
       </LightCard>
-      <RowBetween style={{ marginTop: '0.25rem', padding: '0 1rem' }}>
-        <TradePrice price={trade.executionPrice} showInverted={showInverted} setShowInverted={setShowInverted} />
-      </RowBetween>
-      <LightCard style={{ padding: '.75rem', marginTop: '0.5rem' }}>
-        <AdvancedSwapDetails trade={trade} allowedSlippage={allowedSlippage} />
+      <LightCard style={{ padding: '.75rem', marginTop: '0.5rem', border: 'none', backgroundColor: 'transparent' }}>
+        <AdvancedSwapDetails
+          trade={trade}
+          allowedSlippage={allowedSlippage}
+          showInverted={showInverted}
+          setShowInverted={setShowInverted}
+        />
       </LightCard>
       {showAcceptChanges ? (
         <SwapShowAcceptChanges justify="flex-start" gap={'0px'}>

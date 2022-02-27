@@ -25,7 +25,6 @@ const StyledPriceContainer = styled.button`
   flex-direction: row;
   text-align: left;
   flex-wrap: wrap;
-  padding: 8px 0;
   user-select: text;
 `
 

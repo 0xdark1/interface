@@ -52,8 +52,6 @@ const UpperSection = styled.div`
 
 const InfoCard = styled.div`
   padding: 1rem;
-  border: 1px solid ${({ theme }) => theme.bg3};
-  border-radius: 20px;
   position: relative;
   display: grid;
   grid-row-gap: 12px;
@@ -73,10 +71,7 @@ const AccountGroupingRow = styled.div`
   }
 `
 
-const AccountSection = styled.div`
-  padding: 0rem 1rem;
-  ${({ theme }) => theme.mediaWidth.upToMedium`padding: 0rem 1rem 1.5rem 1rem;`};
-`
+const AccountSection = styled.div``
 
 const YourAccount = styled.div`
   h5 {
@@ -96,8 +91,6 @@ const LowerSection = styled.div`
   flex-grow: 1;
   overflow: auto;
   background-color: ${({ theme }) => theme.bg2};
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
 
   h5 {
     margin: 0;
@@ -324,7 +317,7 @@ export default function AccountDetails({
                       <div>
                         {account && (
                           <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>
+                            <span style={{ marginLeft: '0' }}>
                               <Trans>Copy Address</Trans>
                             </span>
                           </Copy>

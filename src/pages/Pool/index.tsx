@@ -9,7 +9,7 @@ import { SwitchLocaleLink } from 'components/SwitchLocaleLink'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useV3Positions } from 'hooks/useV3Positions'
 import { useContext } from 'react'
-import { BookOpen, ChevronDown, ChevronsRight, Inbox, Layers, PlusCircle } from 'react-feather'
+import { BookOpen, ChevronDown, Inbox, Layers, PlusCircle } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { useWalletModalToggle } from 'state/application/hooks'
 import { useUserHideClosedPositions } from 'state/user/hooks'
@@ -161,21 +161,11 @@ export default function Pool() {
     {
       content: (
         <MenuItem>
-          <Trans>Migrate</Trans>
-          <ChevronsRight size={16} />
-        </MenuItem>
-      ),
-      link: '/migrate/v2',
-      external: false,
-    },
-    {
-      content: (
-        <MenuItem>
           <Trans>V2 liquidity</Trans>
           <Layers size={16} />
         </MenuItem>
       ),
-      link: '/liquidity/v2',
+      link: '/liquidity',
       external: false,
     },
     {

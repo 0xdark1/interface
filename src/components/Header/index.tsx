@@ -120,7 +120,7 @@ const HeaderLinks = styled(Row)`
   `};
 `
 
-const Divider = styled.div`
+const Separator = styled.div`
   height: 3rem;
   width: 1px;
   background-color: ${({ theme }) => theme.bg2};
@@ -340,7 +340,7 @@ export default function Header() {
           <HeaderElement>
             <Menu />
           </HeaderElement>
-          <Divider />
+          <Separator />
           <HeaderElement>
             {false && availableClaim && !showClaimPopup && (
               <UNIWrapper onClick={toggleClaimModal}>
@@ -366,6 +366,7 @@ export default function Header() {
                   </Trans>
                 </BalanceText>
               ) : null}
+              <Separator />
               <Web3Status />
             </AccountElement>
           </HeaderElement>

@@ -19,7 +19,7 @@ import { ChainConnectivityWarning } from './ChainConnectivityWarning'
 
 const StyledPolling = styled.div<{ warning: boolean }>`
   position: fixed;
-  display: flex;
+  display: none;
   align-items: center;
   right: 0;
   bottom: 0;

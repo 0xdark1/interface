@@ -54,23 +54,22 @@ const Container = styled.div<{ hideInput: boolean }>`
 
 const CurrencySelect = styled(ButtonGray)<{ visible: boolean; selected: boolean; hideInput?: boolean }>`
   align-items: center;
-  background-color: ${({ selected, theme }) => (selected ? theme.bg2 : theme.primary1)};
-  color: ${({ selected, theme }) => (selected ? theme.text1 : theme.white)};
+  background-color: transparent;
+  color: ${({ selected, theme }) => (selected ? theme.text1 : theme.primary1)};
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 0;
   outline: none;
   user-select: none;
   border: none;
   font-size: 24px;
   font-weight: 500;
-  height: ${({ hideInput }) => (hideInput ? '2.8rem' : '2.4rem')};
+  height: 100%;
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
   padding: 0 8px;
   justify-content: space-between;
-  margin-left: ${({ hideInput }) => (hideInput ? '0' : '12px')};
   :focus,
   :hover {
-    background-color: ${({ selected, theme }) => (selected ? theme.bg3 : darken(0.05, theme.primary1))};
+    background-color: ${({ theme }) => theme.bg1};
   }
   visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
 `
@@ -80,7 +79,14 @@ const InputRow = styled.div<{ selected: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.bg2};
   align-items: center;
   justify-content: space-between;
-  padding: ${({ selected }) => (selected ? ' 1rem 1rem 0.75rem 1rem' : '1rem 1rem 1rem 1rem')};
+  height: 4.75rem;
+  // padding: ${({ selected }) => (selected ? ' 1rem 1rem 0.75rem 1rem' : '1rem 1rem 1rem 1rem')};
+`
+
+const Separator = styled.div`
+  height: 3.75rem;
+  width: 1px;
+  background-color: ${({ theme }) => theme.bg2};
 `
 
 const LabelRow = styled.div`
@@ -89,7 +95,7 @@ const LabelRow = styled.div`
   color: ${({ theme }) => theme.text1};
   font-size: 0.75rem;
   line-height: 1rem;
-  padding: 0 1rem 1rem;
+  padding: 0.75rem 0 0 0;
   span:hover {
     cursor: pointer;
     color: ${({ theme }) => darken(0.2, theme.text2)};
@@ -112,7 +118,7 @@ const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
   height: 35%;
 
   path {
-    stroke: ${({ selected, theme }) => (selected ? theme.text1 : theme.white)};
+    stroke: ${({ selected, theme }) => (selected ? theme.text1 : theme.primary1)};
     stroke-width: 1.5px;
   }
 `
@@ -226,7 +232,7 @@ export default function CurrencyInputPanel({
               $loading={loading}
             />
           )}
-
+          <Separator />
           <CurrencySelect
             visible={currency !== undefined}
             selected={!!currency}

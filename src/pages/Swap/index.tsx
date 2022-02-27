@@ -1,3 +1,4 @@
+import { ArrowsVertical20 } from '@carbon/icons-react'
 import { Trans } from '@lingui/macro'
 import { Trade } from '@uniswap/router-sdk'
 import { Currency, CurrencyAmount, Token, TradeType } from '@uniswap/sdk-core'
@@ -386,7 +387,7 @@ export default function Swap({ history }: RouteComponentProps) {
       />
       <AppBody>
         <SwapHeader allowedSlippage={allowedSlippage} />
-        <Wrapper id="swap-page">
+        <Wrapper id="swap-page" style={{ padding: '1.25rem' }}>
           <ConfirmSwapModal
             isOpen={showConfirm}
             trade={trade}
@@ -420,8 +421,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 loading={independentField === Field.OUTPUT && routeIsSyncing}
               />
               <ArrowWrapper clickable>
-                <ArrowDown
-                  size="16"
+                <ArrowsVertical20
                   onClick={() => {
                     setApprovalSubmitted(false) // reset 2 step UI for approvals
                     onSwitchTokens()
@@ -461,7 +461,7 @@ export default function Swap({ history }: RouteComponentProps) {
             ) : null}
           </AutoColumn>
         </Wrapper>
-        {!showWrap && userHasSpecifiedInputOutput && (trade || routeIsLoading || routeIsSyncing) && (
+        {!showWrap && userHasSpecifiedInputOutput && (
           <SwapDetailsDropdown
             trade={trade}
             syncing={routeIsSyncing}
@@ -500,87 +500,85 @@ export default function Swap({ history }: RouteComponentProps) {
             </GreyCard>
           ) : showApproveFlow ? (
             <AutoRow style={{ flexWrap: 'nowrap', width: '100%' }}>
-              <AutoColumn style={{ width: '100%' }} gap="12px">
-                <ButtonConfirmed
-                  onClick={handleApprove}
-                  disabled={
-                    approvalState !== ApprovalState.NOT_APPROVED ||
-                    approvalSubmitted ||
-                    signatureState === UseERC20PermitState.SIGNED
-                  }
-                  width="100%"
-                  altDisabledStyle={approvalState === ApprovalState.PENDING} // show solid button while waiting
-                  confirmed={approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED}
-                >
-                  <AutoRow justify="space-between" style={{ flexWrap: 'nowrap' }}>
-                    <span style={{ display: 'flex', alignItems: 'center' }}>
-                      <CurrencyLogo
-                        currency={currencies[Field.INPUT]}
-                        size={'20px'}
-                        style={{ marginRight: '8px', flexShrink: 0 }}
-                      />
-                      {/* we need to shorten this string on mobile */}
-                      {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
-                        <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
-                      ) : (
-                        <Trans>Allow the Cronus Protocol to use your {currencies[Field.INPUT]?.symbol}</Trans>
-                      )}
-                    </span>
-                    {approvalState === ApprovalState.PENDING ? (
-                      <Loader stroke="white" />
-                    ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
-                      signatureState === UseERC20PermitState.SIGNED ? (
-                      <CheckCircle size="20" color={theme.green1} />
+              <ButtonConfirmed
+                onClick={handleApprove}
+                disabled={
+                  approvalState !== ApprovalState.NOT_APPROVED ||
+                  approvalSubmitted ||
+                  signatureState === UseERC20PermitState.SIGNED
+                }
+                width="100%"
+                altDisabledStyle={approvalState === ApprovalState.PENDING} // show solid button while waiting
+                confirmed={approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED}
+              >
+                <AutoRow justify="space-between" style={{ flexWrap: 'nowrap' }}>
+                  <span style={{ display: 'flex', alignItems: 'center' }}>
+                    <CurrencyLogo
+                      currency={currencies[Field.INPUT]}
+                      size={'20px'}
+                      style={{ marginRight: '8px', flexShrink: 0 }}
+                    />
+                    {/* we need to shorten this string on mobile */}
+                    {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
+                      <Trans>Approved {currencies[Field.INPUT]?.symbol}</Trans>
                     ) : (
-                      <MouseoverTooltip
-                        text={
-                          <Trans>
-                            You must give the Cronus smart contracts permission to use your{' '}
-                            {currencies[Field.INPUT]?.symbol}. You only have to do this once per token.
-                          </Trans>
-                        }
-                      >
-                        <HelpCircle size="20" color={'white'} style={{ marginLeft: '8px' }} />
-                      </MouseoverTooltip>
+                      <Trans>Approve {currencies[Field.INPUT]?.symbol}</Trans>
                     )}
-                  </AutoRow>
-                </ButtonConfirmed>
-                <ButtonError
-                  onClick={() => {
-                    if (isExpertMode) {
-                      handleSwap()
-                    } else {
-                      setSwapState({
-                        tradeToConfirm: trade,
-                        attemptingTxn: false,
-                        swapErrorMessage: undefined,
-                        showConfirm: true,
-                        txHash: undefined,
-                      })
-                    }
-                  }}
-                  width="100%"
-                  id="swap-button"
-                  disabled={
-                    !isValid ||
-                    routeIsSyncing ||
-                    routeIsLoading ||
-                    (approvalState !== ApprovalState.APPROVED && signatureState !== UseERC20PermitState.SIGNED) ||
-                    priceImpactTooHigh
+                  </span>
+                  {approvalState === ApprovalState.PENDING ? (
+                    <Loader stroke="white" />
+                  ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
+                    signatureState === UseERC20PermitState.SIGNED ? (
+                    <CheckCircle size="19" color={theme.green1} />
+                  ) : (
+                    <MouseoverTooltip
+                      text={
+                        <Trans>
+                          You must give the Cronus smart contracts permission to use your{' '}
+                          {currencies[Field.INPUT]?.symbol}. You only have to do this once per token.
+                        </Trans>
+                      }
+                    >
+                      <HelpCircle size="19" color={'white'} style={{ marginLeft: '8px' }} />
+                    </MouseoverTooltip>
+                  )}
+                </AutoRow>
+              </ButtonConfirmed>
+              <ButtonError
+                onClick={() => {
+                  if (isExpertMode) {
+                    handleSwap()
+                  } else {
+                    setSwapState({
+                      tradeToConfirm: trade,
+                      attemptingTxn: false,
+                      swapErrorMessage: undefined,
+                      showConfirm: true,
+                      txHash: undefined,
+                    })
                   }
-                  error={isValid && priceImpactSeverity > 2}
-                >
-                  <Text fontSize={16} fontWeight={500}>
-                    {priceImpactTooHigh ? (
-                      <Trans>High Price Impact</Trans>
-                    ) : trade && priceImpactSeverity > 2 ? (
-                      <Trans>Swap Anyway</Trans>
-                    ) : (
-                      <Trans>Swap</Trans>
-                    )}
-                  </Text>
-                </ButtonError>
-              </AutoColumn>
+                }}
+                width="100%"
+                id="swap-button"
+                disabled={
+                  !isValid ||
+                  routeIsSyncing ||
+                  routeIsLoading ||
+                  (approvalState !== ApprovalState.APPROVED && signatureState !== UseERC20PermitState.SIGNED) ||
+                  priceImpactTooHigh
+                }
+                error={isValid && priceImpactSeverity > 2}
+              >
+                <Text fontSize={20} fontWeight={500}>
+                  {priceImpactTooHigh ? (
+                    <Trans>High Price Impact</Trans>
+                  ) : trade && priceImpactSeverity > 2 ? (
+                    <Trans>Swap Anyway</Trans>
+                  ) : (
+                    <Trans>Swap</Trans>
+                  )}
+                </Text>
+              </ButtonError>
             </AutoRow>
           ) : (
             <ButtonError
