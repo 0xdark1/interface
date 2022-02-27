@@ -138,30 +138,18 @@ const StyledChevronDown = styled(ChevronDown)`
 `
 const BridgeLabel = ({ chainId }: { chainId: SupportedChainId }) => {
   switch (chainId) {
-    case SupportedChainId.ARBITRUM_ONE:
-    case SupportedChainId.ARBITRUM_RINKEBY:
-      return <Trans>Arbitrum Bridge</Trans>
-    case SupportedChainId.OPTIMISM:
-    case SupportedChainId.OPTIMISTIC_KOVAN:
-      return <Trans>Optimism Gateway</Trans>
-    case SupportedChainId.POLYGON:
-    case SupportedChainId.POLYGON_MUMBAI:
-      return <Trans>Polygon Bridge</Trans>
+    case SupportedChainId.EVMOS:
+    case SupportedChainId.EVMOS_TESTNET:
+      return <Trans>Evmos Bridge</Trans>
     default:
       return <Trans>Bridge</Trans>
   }
 }
 const ExplorerLabel = ({ chainId }: { chainId: SupportedChainId }) => {
   switch (chainId) {
-    case SupportedChainId.ARBITRUM_ONE:
-    case SupportedChainId.ARBITRUM_RINKEBY:
-      return <Trans>Arbiscan</Trans>
-    case SupportedChainId.OPTIMISM:
-    case SupportedChainId.OPTIMISTIC_KOVAN:
-      return <Trans>Optimistic Etherscan</Trans>
-    case SupportedChainId.POLYGON:
-    case SupportedChainId.POLYGON_MUMBAI:
-      return <Trans>Polygonscan</Trans>
+    case SupportedChainId.EVMOS:
+    case SupportedChainId.EVMOS_TESTNET:
+      return <Trans>Evmos explorer</Trans> //TODO
     default:
       return <Trans>Etherscan</Trans>
   }
@@ -316,10 +304,8 @@ export default function NetworkSelector() {
           <FlyoutHeader>
             <Trans>Select a network</Trans>
           </FlyoutHeader>
-          <Row onSelectChain={handleChainSwitch} targetChain={SupportedChainId.MAINNET} />
-          <Row onSelectChain={handleChainSwitch} targetChain={SupportedChainId.POLYGON} />
-          <Row onSelectChain={handleChainSwitch} targetChain={SupportedChainId.OPTIMISM} />
-          <Row onSelectChain={handleChainSwitch} targetChain={SupportedChainId.ARBITRUM_ONE} />
+          <Row onSelectChain={handleChainSwitch} targetChain={SupportedChainId.EVMOS} />
+          <Row onSelectChain={handleChainSwitch} targetChain={SupportedChainId.EVMOS_TESTNET} />
         </FlyoutMenu>
       )}
     </SelectorWrapper>

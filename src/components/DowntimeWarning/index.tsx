@@ -48,28 +48,16 @@ export default function DowntimeWarning() {
   }
 
   switch (chainId) {
-    case SupportedChainId.OPTIMISM:
-    case SupportedChainId.OPTIMISTIC_KOVAN:
+    //TODO edit
+    case SupportedChainId.EVMOS:
+    case SupportedChainId.EVMOS_TESTNET:
       return (
         <Wrapper>
           <Trans>
-            Optimism is in Beta and may experience downtime. Optimism expects planned downtime to upgrade the network in
+            Evmos is in Beta and may experience downtime. Evmos expects planned downtime to upgrade the network in
             the near future. During downtime, your position will not earn fees and you will be unable to remove
             liquidity.{' '}
             <ReadMoreLink href="https://help.uniswap.org/en/articles/5406082-what-happens-if-the-optimistic-ethereum-network-experiences-downtime">
-              Read more.
-            </ReadMoreLink>
-          </Trans>
-        </Wrapper>
-      )
-    case SupportedChainId.ARBITRUM_ONE:
-    case SupportedChainId.ARBITRUM_RINKEBY:
-      return (
-        <Wrapper>
-          <Trans>
-            Arbitrum is in Beta and may experience downtime. During downtime, your position will not earn fees and you
-            will be unable to remove liquidity.{' '}
-            <ReadMoreLink href="https://help.uniswap.org/en/articles/5576122-arbitrum-network-downtime">
               Read more.
             </ReadMoreLink>
           </Trans>

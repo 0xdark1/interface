@@ -8,6 +8,7 @@ const GEMINI_LIST = 'https://www.gemini.com/uniswap/manifest.json'
 export const ARBITRUM_LIST = 'https://bridge.arbitrum.io/token-list-42161.json'
 const KLEROS_LIST = 't2crtokens.eth'
 export const OPTIMISM_LIST = 'https://static.optimism.io/optimism.tokenlist.json'
+export const EVMOS_LIST = 'https://static.optimism.io/optimism.tokenlist.json' //TODO edit this
 const ROLL_LIST = 'https://app.tryroll.com/tokens.json'
 const SET_LIST = 'https://raw.githubusercontent.com/SetProtocol/uniswap-tokenlist/main/set.tokenlist.json'
 const WRAPPED_LIST = 'wrapped.tokensoft.eth'
@@ -27,6 +28,7 @@ const DEFAULT_LIST_OF_LISTS_TO_DISPLAY: string[] = [
   WRAPPED_LIST,
   SET_LIST,
   ROLL_LIST,
+  EVMOS_LIST,
   ARBITRUM_LIST,
   OPTIMISM_LIST,
 ]

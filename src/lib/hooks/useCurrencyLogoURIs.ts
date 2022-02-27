@@ -5,18 +5,19 @@ import { useMemo } from 'react'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
+import EvmosLogo from '../../assets/images/evmos-logo.png'
 import MaticLogo from '../../assets/svg/matic-token-icon.svg'
 
-type Network = 'ethereum' | 'arbitrum' | 'optimism'
+type Network = 'ethereum' | 'evmos' | 'evmos testnet'
 
 function chainIdToNetworkName(networkId: SupportedChainId): Network {
   switch (networkId) {
     case SupportedChainId.MAINNET:
       return 'ethereum'
-    case SupportedChainId.ARBITRUM_ONE:
-      return 'arbitrum'
-    case SupportedChainId.OPTIMISM:
-      return 'optimism'
+    case SupportedChainId.EVMOS:
+      return 'evmos'
+    case SupportedChainId.EVMOS_TESTNET:
+      return 'evmos testnet'
     default:
       return 'ethereum'
   }
@@ -24,9 +25,9 @@ function chainIdToNetworkName(networkId: SupportedChainId): Network {
 
 function getNativeLogoURI(chainId: SupportedChainId = SupportedChainId.MAINNET): string {
   switch (chainId) {
-    case SupportedChainId.POLYGON_MUMBAI:
-    case SupportedChainId.POLYGON:
-      return MaticLogo
+    case SupportedChainId.EVMOS:
+    case SupportedChainId.EVMOS_TESTNET:
+      return EvmosLogo
     default:
       return EthereumLogo
   }
@@ -34,9 +35,9 @@ function getNativeLogoURI(chainId: SupportedChainId = SupportedChainId.MAINNET):
 
 function getTokenLogoURI(address: string, chainId: SupportedChainId = SupportedChainId.MAINNET): string | void {
   const networkName = chainIdToNetworkName(chainId)
-  const networksWithUrls = [SupportedChainId.ARBITRUM_ONE, SupportedChainId.MAINNET, SupportedChainId.OPTIMISM]
+  const networksWithUrls = [SupportedChainId.EVMOS, SupportedChainId.MAINNET, SupportedChainId.EVMOS_TESTNET]
   if (networksWithUrls.includes(chainId)) {
-    return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${address}/logo.png`
+    return `https://raw.githubusercontent.com/Uniswap/assets/master/blockchains/${networkName}/assets/${address}/logo.png` //TODO change
   }
 }
 
