@@ -91,13 +91,13 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
+  color: ${({ theme }) => theme.text1};
   font-weight: 500;
   :hover,
   :focus {
     border: 0 solid transparent;
     box-shadow: none;
-    background-color: ${({ pending, theme }) => (pending ? theme.primary1 : theme.bg1)};
+    background-color: ${({ theme }) => theme.bg1};
   }
 `
 
@@ -166,7 +166,7 @@ function Web3StatusInner() {
             <Text>
               <Trans>{pending?.length} Pending</Trans>
             </Text>{' '}
-            <Loader stroke="white" />
+            <Loader />
           </RowBetween>
         ) : (
           <>

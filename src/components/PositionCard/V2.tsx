@@ -21,7 +21,6 @@ import { LightCard } from '../Card'
 import { AutoColumn } from '../Column'
 import CurrencyLogo from '../CurrencyLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
-import { CardNoise } from '../earn/styled'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
 import { FixedHeightRow } from '.'
@@ -77,8 +76,7 @@ export default function V2PositionCard({ pair, border, stakedBalance }: Position
   const backgroundColor = useColor(pair?.token0)
 
   return (
-    <StyledPositionCard border={border} bgColor={backgroundColor}>
-      <CardNoise />
+    <StyledPositionCard border={border} bgColor={''}>
       <AutoColumn gap="12px">
         <FixedHeightRow>
           <AutoRow gap="8px">

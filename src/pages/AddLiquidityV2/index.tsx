@@ -3,9 +3,8 @@ import { TransactionResponse } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import { Currency, CurrencyAmount, Percent } from '@uniswap/sdk-core'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
-import { SwitchLocaleLink } from 'components/SwitchLocaleLink'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCallback, useContext, useState } from 'react'
+import { Fragment, useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
@@ -441,13 +440,13 @@ export default function AddLiquidity({
             <Trans>Connect Wallet</Trans>
           </ButtonLight>
         ) : (
-          <AutoColumn gap={'md'}>
+          <RowBetween>
             {(approvalA === ApprovalState.NOT_APPROVED ||
               approvalA === ApprovalState.PENDING ||
               approvalB === ApprovalState.NOT_APPROVED ||
               approvalB === ApprovalState.PENDING) &&
               isValid && (
-                <RowBetween>
+                <>
                   {approvalA !== ApprovalState.APPROVED && (
                     <ButtonPrimary
                       onClick={approveACallback}
@@ -456,10 +455,14 @@ export default function AddLiquidity({
                     >
                       {approvalA === ApprovalState.PENDING ? (
                         <Dots>
-                          <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                          <Text fontSize={20} fontWeight={500}>
+                            <Trans>Approving {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                          </Text>
                         </Dots>
                       ) : (
-                        <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                        <Text fontSize={20} fontWeight={500}>
+                          <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
+                        </Text>
                       )}
                     </ButtonPrimary>
                   )}
@@ -471,14 +474,18 @@ export default function AddLiquidity({
                     >
                       {approvalB === ApprovalState.PENDING ? (
                         <Dots>
-                          <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                          <Text fontSize={20} fontWeight={500}>
+                            <Trans>Approving {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                          </Text>
                         </Dots>
                       ) : (
-                        <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                        <Text fontSize={20} fontWeight={500}>
+                          <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
+                        </Text>
                       )}
                     </ButtonPrimary>
                   )}
-                </RowBetween>
+                </>
               )}
             <ButtonError
               onClick={() => {
@@ -491,10 +498,9 @@ export default function AddLiquidity({
                 {error ?? <Trans>Supply</Trans>}
               </Text>
             </ButtonError>
-          </AutoColumn>
+          </RowBetween>
         )}
       </AppBody>
-      <SwitchLocaleLink />
 
       {!addIsUnsupported ? (
         pair && !noLiquidity && pairState !== PairState.INVALID ? (

@@ -19,11 +19,9 @@ import { ApplicationModal } from '../state/application/reducer'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import AddLiquidity from './AddLiquidity'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
-import MigrateV2 from './MigrateV2'
-import MigrateV2Pair from './MigrateV2/MigrateV2Pair'
 import { PositionPage } from './Pool/PositionPage'
 import PoolV2 from './Pool/v2'
-import PoolFinder from './PoolFinder'
+// import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
@@ -46,7 +44,7 @@ const BodyWrapper = styled.div`
   z-index: 1;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 4rem 8px 16px 8px;
+    padding: 4.5rem 8px 16px 8px;
   `};
 `
 
@@ -91,7 +89,6 @@ export default function App() {
                 <Route exact strict path="/swap" component={Swap} />
 
                 <Route exact strict path="/liquidity" component={PoolV2} />
-                <Route exact strict path="/liquidity/find" component={PoolFinder} />
                 <Route exact strict path="/liquidity/:tokenId" component={PositionPage} />
 
                 <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
@@ -104,9 +101,6 @@ export default function App() {
                 />
 
                 <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-
-                <Route exact strict path="/migrate/v2" component={MigrateV2} />
-                <Route exact strict path="/migrate/v2/:address" component={MigrateV2Pair} />
 
                 <Route component={RedirectPathToSwapOnly} />
               </Switch>

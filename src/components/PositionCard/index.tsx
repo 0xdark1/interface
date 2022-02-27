@@ -3,7 +3,6 @@ import { CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
 import { Pair } from '@uniswap/v2-sdk'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import JSBI from 'jsbi'
-import { transparentize } from 'polished'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { Link } from 'react-router-dom'
@@ -14,15 +13,14 @@ import { BIG_INT_ZERO } from '../../constants/misc'
 import { useColor } from '../../hooks/useColor'
 import { useTotalSupply } from '../../hooks/useTotalSupply'
 import { useTokenBalance } from '../../state/wallet/hooks'
-import { ExternalLink, ThemedText } from '../../theme'
+import { ThemedText } from '../../theme'
 import { currencyId } from '../../utils/currencyId'
 import { unwrappedToken } from '../../utils/unwrappedToken'
-import { ButtonEmpty, ButtonPrimary, ButtonSecondary } from '../Button'
+import { ButtonEmpty, ButtonGray, ButtonPrimary } from '../Button'
 import { GreyCard, LightCard } from '../Card'
 import { AutoColumn } from '../Column'
 import CurrencyLogo from '../CurrencyLogo'
 import DoubleCurrencyLogo from '../DoubleLogo'
-import { CardNoise } from '../earn/styled'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import { Dots } from '../swap/styleds'
 
@@ -30,12 +28,16 @@ export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
 `
 
-const StyledPositionCard = styled(LightCard)<{ bgColor: any }>`
+const StyledPositionCard = styled(LightCard)`
   border: none;
-  background: ${({ theme, bgColor }) =>
-    `radial-gradient(91.85% 100% at 1.84% 0%, ${transparentize(0.8, bgColor)} 0%, ${theme.bg3} 100%) `};
+  padding: 0;
+  background: ${({ theme }) => theme.bg0};
   position: relative;
   overflow: hidden;
+`
+
+const ButtonEmptyStandardText = styled(ButtonEmpty)`
+  color: ${({ theme }) => theme.text1};
 `
 
 interface PositionCardProps {
@@ -193,10 +195,9 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
   const backgroundColor = useColor(pair?.token0)
 
   return (
-    <StyledPositionCard border={border} bgColor={backgroundColor}>
-      <CardNoise />
+    <StyledPositionCard border={border}>
       <AutoColumn gap="12px">
-        <FixedHeightRow>
+        <FixedHeightRow style={{ height: 'auto', padding: '1rem', cursor: 'pointer' }}>
           <AutoRow gap="8px" style={{ marginLeft: '8px' }}>
             <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={20} />
             <Text fontWeight={500} fontSize={20}>
@@ -210,7 +211,12 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
             </Text>
           </AutoRow>
           <RowFixed gap="8px" style={{ marginRight: '4px' }}>
-            <ButtonEmpty padding="6px 8px" $borderRadius="12px" width="100%" onClick={() => setShowMore(!showMore)}>
+            <ButtonEmptyStandardText
+              padding="6px 8px"
+              $borderRadius="0"
+              width="100%"
+              onClick={() => setShowMore(!showMore)}
+            >
               {showMore ? (
                 <>
                   <Trans>Manage</Trans>
@@ -222,126 +228,109 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                   <ChevronDown size="20" style={{ marginLeft: '8px', height: '20px', minWidth: '20px' }} />
                 </>
               )}
-            </ButtonEmpty>
+            </ButtonEmptyStandardText>
           </RowFixed>
         </FixedHeightRow>
 
         {showMore && (
-          <AutoColumn gap="8px">
-            <FixedHeightRow>
-              <Text fontSize={16} fontWeight={500}>
-                <Trans>Your total pool tokens:</Trans>
-              </Text>
-              <Text fontSize={16} fontWeight={500}>
-                {userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}
-              </Text>
-            </FixedHeightRow>
-            {stakedBalance && (
+          <>
+            <AutoColumn gap="8px" style={{ padding: '0 1rem' }}>
               <FixedHeightRow>
                 <Text fontSize={16} fontWeight={500}>
-                  <Trans>Pool tokens in rewards pool:</Trans>
+                  <Trans>Your total pool tokens:</Trans>
                 </Text>
                 <Text fontSize={16} fontWeight={500}>
-                  {stakedBalance.toSignificant(4)}
+                  {userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}
                 </Text>
               </FixedHeightRow>
-            )}
-            <FixedHeightRow>
-              <RowFixed>
-                <Text fontSize={16} fontWeight={500}>
-                  <Trans>Pooled {currency0.symbol}:</Trans>
-                </Text>
-              </RowFixed>
-              {token0Deposited ? (
-                <RowFixed>
-                  <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                    {token0Deposited?.toSignificant(6)}
+              {stakedBalance && (
+                <FixedHeightRow>
+                  <Text fontSize={16} fontWeight={500}>
+                    <Trans>Pool tokens in rewards pool:</Trans>
                   </Text>
-                  <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency0} />
-                </RowFixed>
-              ) : (
-                '-'
-              )}
-            </FixedHeightRow>
-
-            <FixedHeightRow>
-              <RowFixed>
-                <Text fontSize={16} fontWeight={500}>
-                  <Trans>Pooled {currency1.symbol}:</Trans>
-                </Text>
-              </RowFixed>
-              {token1Deposited ? (
-                <RowFixed>
-                  <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
-                    {token1Deposited?.toSignificant(6)}
+                  <Text fontSize={16} fontWeight={500}>
+                    {stakedBalance.toSignificant(4)}
                   </Text>
-                  <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency1} />
-                </RowFixed>
-              ) : (
-                '-'
+                </FixedHeightRow>
               )}
-            </FixedHeightRow>
-
-            <FixedHeightRow>
-              <Text fontSize={16} fontWeight={500}>
-                <Trans>Your pool share:</Trans>
-              </Text>
-              <Text fontSize={16} fontWeight={500}>
-                {poolTokenPercentage ? (
-                  <Trans>
-                    {poolTokenPercentage.toFixed(2) === '0.00' ? '<0.01' : poolTokenPercentage.toFixed(2)} %
-                  </Trans>
+              <FixedHeightRow>
+                <RowFixed>
+                  <Text fontSize={16} fontWeight={500}>
+                    <Trans>Pooled {currency0.symbol}:</Trans>
+                  </Text>
+                </RowFixed>
+                {token0Deposited ? (
+                  <RowFixed>
+                    <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
+                      {token0Deposited?.toSignificant(6)}
+                    </Text>
+                    <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency0} />
+                  </RowFixed>
                 ) : (
                   '-'
                 )}
-              </Text>
-            </FixedHeightRow>
+              </FixedHeightRow>
 
-            <ButtonSecondary padding="8px" $borderRadius="8px">
-              <ExternalLink
-                style={{ width: '100%', textAlign: 'center' }}
-                href={`https://v2.info.uniswap.org/account/${account}`}
-              >
-                <Trans>
-                  View accrued fees and analytics<span style={{ fontSize: '11px' }}>↗</span>
-                </Trans>
-              </ExternalLink>
-            </ButtonSecondary>
+              <FixedHeightRow>
+                <RowFixed>
+                  <Text fontSize={16} fontWeight={500}>
+                    <Trans>Pooled {currency1.symbol}:</Trans>
+                  </Text>
+                </RowFixed>
+                {token1Deposited ? (
+                  <RowFixed>
+                    <Text fontSize={16} fontWeight={500} marginLeft={'6px'}>
+                      {token1Deposited?.toSignificant(6)}
+                    </Text>
+                    <CurrencyLogo size="20px" style={{ marginLeft: '8px' }} currency={currency1} />
+                  </RowFixed>
+                ) : (
+                  '-'
+                )}
+              </FixedHeightRow>
+
+              <FixedHeightRow>
+                <Text fontSize={16} fontWeight={500}>
+                  <Trans>Your pool share:</Trans>
+                </Text>
+                <Text fontSize={16} fontWeight={500}>
+                  {poolTokenPercentage ? (
+                    <Trans>
+                      {poolTokenPercentage.toFixed(2) === '0.00' ? '<0.01' : poolTokenPercentage.toFixed(2)} %
+                    </Trans>
+                  ) : (
+                    '-'
+                  )}
+                </Text>
+              </FixedHeightRow>
+            </AutoColumn>
+
             {userDefaultPoolBalance && JSBI.greaterThan(userDefaultPoolBalance.quotient, BIG_INT_ZERO) && (
               <RowBetween marginTop="10px">
-                <ButtonPrimary
-                  padding="8px"
-                  $borderRadius="8px"
+                <ButtonGray
+                  padding="24px"
+                  $borderRadius="0"
                   as={Link}
-                  to={`/migrate/v2/${pair.liquidityToken.address}`}
-                  width="32%"
-                >
-                  <Trans>Migrate</Trans>
-                </ButtonPrimary>
-                <ButtonPrimary
-                  padding="8px"
-                  $borderRadius="8px"
-                  as={Link}
-                  to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
-                  width="32%"
-                >
-                  <Trans>Add</Trans>
-                </ButtonPrimary>
-                <ButtonPrimary
-                  padding="8px"
-                  $borderRadius="8px"
-                  as={Link}
-                  width="32%"
-                  to={`/remove/v2/${currencyId(currency0)}/${currencyId(currency1)}`}
+                  width="50%"
+                  to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}`}
                 >
                   <Trans>Remove</Trans>
+                </ButtonGray>
+                <ButtonPrimary
+                  padding="24px"
+                  $borderRadius="0"
+                  as={Link}
+                  to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`}
+                  width="50%"
+                >
+                  <Trans>Add</Trans>
                 </ButtonPrimary>
               </RowBetween>
             )}
             {stakedBalance && JSBI.greaterThan(stakedBalance.quotient, BIG_INT_ZERO) && (
               <ButtonPrimary
-                padding="8px"
-                $borderRadius="8px"
+                padding="24px"
+                $borderRadius="0"
                 as={Link}
                 to={`/uni/${currencyId(currency0)}/${currencyId(currency1)}`}
                 width="100%"
@@ -349,7 +338,7 @@ export default function FullPositionCard({ pair, border, stakedBalance }: Positi
                 <Trans>Manage Liquidity in Rewards Pool</Trans>
               </ButtonPrimary>
             )}
-          </AutoColumn>
+          </>
         )}
       </AutoColumn>
     </StyledPositionCard>
